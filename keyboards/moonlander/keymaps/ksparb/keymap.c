@@ -80,17 +80,25 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         _______, _______, _______, KC_MS_U, _______, _______, _______,           _______, KC_HOME, KC_PGDN, KC_PGUP,  KC_END, _______, _______,
         _______, KC_BTN2, KC_MS_L, KC_MS_D, KC_MS_R, _______, _______,           _______, KC_LEFT, KC_DOWN,   KC_UP, KC_RGHT, _______, XXXXXXX,
         _______, _______, _______, _______, _______, KC_BTN1,                             KC_LBRC, KC_LCBR, KC_RCBR, KC_RBRC, XXXXXXX, XXXXXXX,
-        _______, _______, _______, _______, _______,         MO(KEYB),           _______,          _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+        _______, _______, _______, _______,  KC_DLR,         MO(KEYB),           _______,          _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
                                             _______, _______, _______,           _______, _______, XXXXXXX
     ),
 
+    /* [MDIA] = LAYOUT_moonlander( */ /* commented out for now because the media buttons break i3 somehow */
+    /*     _______, _______, _______, _______, _______, KC_MPLY, _______,           _______, _______, _______, _______, _______, _______, _______, */
+    /*     _______, _______, _______, _______, KC_MPRV, KC_MNXT, _______,           _______, KC_VOLU, _______,G(KC_UP), _______, _______, _______, */
+    /*     _______, _______, _______, _______, _______, _______, _______,           _______, KC_VOLD,G(KC_LEFT),G(KC_DOWN),G(KC_RGHT), _______, _______, */
+    /*     _______, _______, _______, _______, _______, _______,                             KC_MUTE, _______, KC_MPRV, KC_MNXT, KC_MPLY, _______, */
+    /*     _______, _______, _______, _______, _______,          KC_LSFT,           KC_MSEL,          _______, _______, _______, _______, _______, */
+    /*                                         _______, _______, _______,           XXXXXXX, _______, XXXXXXX */
+    /* ), */
     [MDIA] = LAYOUT_moonlander(
-        _______, _______, _______, _______, _______, KC_MPLY, _______,           _______, _______, _______, _______, _______, _______, _______,
-        _______, _______, _______, _______, KC_MPRV, KC_MNXT, _______,           _______, KC_VOLU, _______,G(KC_UP), _______, _______, _______,
+        _______, _______, _______, _______, _______, _______, _______,           _______, _______, _______, _______, _______, _______, _______,
+        _______, _______, _______, _______, _______, _______, _______,           _______, KC_VOLU, _______,G(KC_UP), _______, _______, _______,
         _______, _______, _______, _______, _______, _______, _______,           _______, KC_VOLD,G(KC_LEFT),G(KC_DOWN),G(KC_RGHT), _______, _______,
-        _______, _______, _______, _______, _______, _______,                             KC_MUTE, _______, KC_MPRV, KC_MNXT, KC_MPLY, _______,
-        _______, _______, _______, _______, _______,          KC_LSFT,           KC_MSEL,          _______, _______, _______, _______, _______,
-                                            _______, _______, _______,           _______, XXXXXXX, _______
+        _______, _______, _______, _______, _______, _______,                             KC_MUTE, _______, _______, _______, _______, _______,
+        _______, _______, _______, _______, _______,          KC_LSFT,           _______,          _______, _______, _______, _______, _______,
+                                            _______, _______, _______,           XXXXXXX, _______, XXXXXXX
     ),
 
     [KEYB] = LAYOUT_moonlander(
@@ -98,12 +106,12 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         XXXXXXX, RGB_MOD, RGB_HUI, RGB_SAI, RGB_VAI, RGB_SPI, RGB_TOG,           XXXXXXX, XXXXXXX,DF(BASE),DF(CLMK), XXXXXXX, XXXXXXX, XXXXXXX,
         XXXXXXX,RGB_RMOD, RGB_HUD, RGB_SAD, RGB_VAD, RGB_SPD, XXXXXXX,           KC_PSCR, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
         XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                             XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,          XXXXXXX,           XXXXXXX,          XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,          _______,           XXXXXXX,          XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
                                             XXXXXXX, XXXXXXX, XXXXXXX,           XXXXXXX, XXXXXXX, XXXXXXX
     ),
 
     [APPS] = LAYOUT_moonlander(
-        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,           XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, LAG(KC_DEL),           XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,LAG(KC_P), XXXXXXX, XXXXXXX,           XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
        XXXXXXX, XXXXXXX, XXXXXXX,LAG(KC_S), XXXXXXX, XXXXXXX, XXXXXXX,           XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
         XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                             XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
