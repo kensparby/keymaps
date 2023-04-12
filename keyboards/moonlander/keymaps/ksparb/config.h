@@ -29,3 +29,5 @@
 /* #define MK_KINETIC_SPEED */
 
 /* #define PERMISSIVE_HOLD */
+
+#define TAPPING_TOGGLE 2

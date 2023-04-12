@@ -40,12 +40,12 @@ enum custom_keycodes {
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [BASE] = LAYOUT_moonlander(
-         KC_GRV,    KC_1,    KC_2,    KC_3,    KC_4,    KC_5,  KC_DEL,          MO(APPS),    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,  KC_DEL,
+         KC_GRV,    KC_1,    KC_2,    KC_3,    KC_4,    KC_5,  KC_DEL, LM(APPS, MOD_LALT | MOD_LGUI),    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,  KC_DEL,
          KC_TAB,    KC_Q,    KC_W,    KC_E,    KC_R,    KC_T, UP_MDIA,    GUI_T(KC_DOWN),    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P, KC_BSLS,
         LCTLESC,    KC_A,    KC_S,    KC_D,    KC_F,    KC_G,  KC_EQL,           KC_MINS,    KC_H,    KC_J,    KC_K,    KC_L, KC_SCLN, KC_QUOT,
         KC_LSPO,    KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                                KC_N,    KC_M, KC_COMM,  KC_DOT, KC_SLSH, KC_RSPC,
-        KC_LEFT, KC_LCTL, KC_LGUI, KC_LALT,MO(SYMB),   LALT_T(KC_APP),            KC_ENT,         MO(MOVE), KC_LBRC, KC_RBRC, KC_RGUI, KC_RGHT,
-                                             KC_SPC,  KC_BSPC, KC_ENT,           KC_CAPS,MO(MDIA),MO(SYMB)
+        KC_LEFT, KC_LCTL, KC_LGUI, KC_LALT,TT(SYMB),   LALT_T(KC_APP),            KC_ENT,         TT(MOVE), KC_LBRC, KC_RBRC, KC_RGUI, KC_RGHT,
+                                             KC_SPC,  KC_BSPC, KC_ENT,           KC_CAPS,MO(MDIA),TT(SYMB)
     ),
 
     [CLMK] = LAYOUT_moonlander(
@@ -57,6 +57,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                             _______, _______, _______,           _______, _______, _______
     ),
 
+    // It was easier to just change key bindings per game. For the few that don't allow it, the BASE layer (qwerty) will do fine.
     /* [GAME] = LAYOUT_moonlander( */
     /*      KC_ESC, _______, _______, _______, _______, _______, _______,          MO(MDIA),   KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,  KC_F12, */
     /*      KC_TAB, _______, _______, _______, _______, _______, KC_SCLN,            KC_EQL, _______, _______, _______, _______, _______, KC_PSCR, */
@@ -110,10 +111,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                             XXXXXXX, XXXXXXX, XXXXXXX,           XXXXXXX, XXXXXXX, XXXXXXX
     ),
 
+    // The APPS layer is loaded with LALT and LGUI modifiers always enabled
     [APPS] = LAYOUT_moonlander(
-        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, LAG(KC_DEL),           XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,LAG(KC_P), XXXXXXX, XXXXXXX,           XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-       XXXXXXX, XXXXXXX, XXXXXXX,LAG(KC_S), XXXXXXX, XXXXXXX, XXXXXXX,           XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_DEL,           XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,KC_P, XXXXXXX, XXXXXXX,           XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+       XXXXXXX, XXXXXXX, XXXXXXX,KC_S, XXXXXXX, XXXXXXX, XXXXXXX,           XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
         XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                             XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
         XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,          XXXXXXX,           XXXXXXX,          XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
                                             XXXXXXX, XXXXXXX, XXXXXXX,           XXXXXXX, XXXXXXX, XXXXXXX
@@ -130,4 +132,16 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         }
     }
     return true;
+}
+
+// CUSTOM SNAEK STUFF
+
+#define SYMB_LAYER_TIMEOUT 3000
+
+void matrix_scan_user(void) {
+    if (get_highest_layer(layer_state) == SYMB) {
+        if (last_input_activity_elapsed() > SYMB_LAYER_TIMEOUT) {
+            layer_off(SYMB);
+        }
+    }
 }
