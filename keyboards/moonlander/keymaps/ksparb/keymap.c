@@ -57,7 +57,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                             _______, _______, _______,           _______, _______, _______
     ),
 
-    // It was easier to just change key bindings per game. For the few that don't allow it, the BASE layer (qwerty) will do fine.
+    // It was better to just change key bindings per game. For the few that don't allow it, the BASE layer (qwerty) will do fine.
     /* [GAME] = LAYOUT_moonlander( */
     /*      KC_ESC, _______, _______, _______, _______, _______, _______,          MO(MDIA),   KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,  KC_F12, */
     /*      KC_TAB, _______, _______, _______, _______, _______, KC_SCLN,            KC_EQL, _______, _______, _______, _______, _______, KC_PSCR, */
@@ -114,9 +114,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     // The APPS layer is loaded with LALT and LGUI modifiers always enabled
     [APPS] = LAYOUT_moonlander(
         XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,  KC_DEL,           XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,    KC_P, XXXXXXX, XXXXXXX,           XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-        XXXXXXX, XXXXXXX, XXXXXXX,    KC_S, XXXXXXX, XXXXXXX, XXXXXXX,           XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                             XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+        XXXXXXX,    KC_Q,    KC_W,    KC_F,    KC_P,    KC_B, XXXXXXX,           XXXXXXX,    KC_J,    KC_L,    KC_U,    KC_Y, KC_SCLN, XXXXXXX,
+        XXXXXXX,    KC_A,    KC_R,    KC_S,    KC_T,    KC_G, XXXXXXX,           XXXXXXX,    KC_K,    KC_N,    KC_E,    KC_I,    KC_O, XXXXXXX,
+        XXXXXXX,    KC_Z,    KC_X,    KC_C,    KC_D,    KC_V,                                KC_M,    KC_H, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
         XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,          XXXXXXX,           XXXXXXX,          XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
                                             XXXXXXX, XXXXXXX, XXXXXXX,           XXXXXXX, XXXXXXX, XXXXXXX
     ),
@@ -136,7 +136,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
 // CUSTOM KEN STUFF
 
-#define SYMB_LAYER_TIMEOUT 3000
+#define SYMB_LAYER_TIMEOUT 2000
 
 void matrix_scan_user(void) {
     if (get_highest_layer(layer_state) == SYMB) {
