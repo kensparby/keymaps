@@ -23,10 +23,11 @@
 enum layers {
     BASE, // default layer
     CLMK, // Colemak
+    WORK, // Workman
     // GAME, // Gaming
-    SYMB, // symbols
+    SYMB, // Symbols
     MOVE, // Movement, and also symbols again
-    MDIA, // media keys
+    MDIA, // Media keys
     KEYB, // Keyboard functions
     APPS, // Shortcuts to open apps
 };
@@ -41,7 +42,7 @@ enum custom_keycodes {
 /* #define CH_LANG LAG(KC_DEL) */
 
 /* TAP DANCE */
-enum td_keycodes { CLN_LANG };
+enum td_keycodes { CAPSLANG };
 
 typedef enum { TD_SINGLE_TAP, TD_SINGLE_HOLD, TD_UNKNOWN } td_state_t;
 
@@ -49,29 +50,37 @@ static td_state_t td_state;
 
 td_state_t cur_dance(tap_dance_state_t *state);
 
-void cln_lang_finished(tap_dance_state_t *state, void *user_data);
-void cln_lang_reset(tap_dance_state_t *state, void *user_data);
+void capslang_finished(tap_dance_state_t *state, void *user_data);
+void capslang_reset(tap_dance_state_t *state, void *user_data);
 
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [BASE] = LAYOUT_moonlander(
          KC_GRV,    KC_1,    KC_2,    KC_3,    KC_4,    KC_5,  KC_DEL, LM(APPS, MOD_LALT | MOD_LGUI),    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,  KC_DEL,
          KC_TAB,    KC_Q,    KC_W,    KC_E,    KC_R,    KC_T, UP_MDIA,    GUI_T(KC_DOWN),    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P, KC_BSLS,
-        LCTLESC,    KC_A,    KC_S,    KC_D,    KC_F,    KC_G,  KC_EQL,           KC_MINS,    KC_H,    KC_J,    KC_K,    KC_L, TD(CLN_LANG), KC_QUOT,
+        LCTLESC,    KC_A,    KC_S,    KC_D,    KC_F,    KC_G,  KC_EQL,           KC_MINS,    KC_H,    KC_J,    KC_K,    KC_L, KC_SCLN, KC_QUOT,
         SC_LSPO,    KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                                KC_N,    KC_M, KC_COMM,  KC_DOT, KC_SLSH, SC_RSPC,
         KC_LEFT, KC_LCTL, KC_LGUI, KC_LALT,MO(SYMB),   LALT_T(KC_APP),            KC_ENT,         MO(MOVE), KC_LBRC, KC_RBRC, KC_RGUI, KC_RGHT,
-                                             KC_SPC,  KC_BSPC, KC_ENT,           KC_CAPS,MO(MDIA),MO(SYMB)
+                                             KC_SPC,  KC_BSPC, KC_ENT,           TD(CAPSLANG),MO(MDIA),MO(SYMB)
     ),
 
     [CLMK] = LAYOUT_moonlander(
         _______, _______, _______, _______, _______, _______, _______,           _______, _______, _______, _______, _______, _______, _______,
-        _______,    KC_Q,    KC_W,    KC_F,    KC_P,    KC_B, _______,           _______,    KC_J,    KC_L,    KC_U,    KC_Y, TD(CLN_LANG), _______,
+        _______,    KC_Q,    KC_W,    KC_F,    KC_P,    KC_B, _______,           _______,    KC_J,    KC_L,    KC_U,    KC_Y, KC_SCLN, _______,
         _______,    KC_A,    KC_R,    KC_S,    KC_T,    KC_G, _______,           _______,    KC_K,    KC_N,    KC_E,    KC_I,    KC_O, _______,
         _______,    KC_Z,    KC_X,    KC_C,    KC_D,    KC_V,                                KC_M,    KC_H, _______, _______, _______, _______,
         _______, _______, _______, _______, _______,          _______,           _______,          _______, _______, _______, _______, _______,
                                             _______, _______, _______,           _______, _______, _______
     ),
 
+    [WORK] = LAYOUT_moonlander(
+        _______, _______, _______, _______, _______, _______, _______,           _______, _______, _______, _______, _______, _______, _______,
+        _______,    KC_Q,    KC_D,    KC_R,    KC_W,    KC_B, _______,           _______,    KC_J,    KC_F,    KC_U,    KC_P, KC_SCLN, _______,
+        _______,    KC_A,    KC_S,    KC_H,    KC_T,    KC_G, _______,           _______,    KC_Y,    KC_N,    KC_E,    KC_O,    KC_I, _______,
+        _______,    KC_Z,    KC_X,    KC_M,    KC_C,    KC_V,                                KC_K,    KC_L, _______, _______, _______, _______,
+        _______, _______, _______, _______, _______,          _______,           _______,          _______, _______, _______, _______, _______,
+                                            _______, _______, _______,           _______, _______, _______
+    ),
     // It was better to just change key bindings per game. For the few that don't allow it, the BASE layer (qwerty) will do fine.
     /* [GAME] = LAYOUT_moonlander( */
     /*      KC_ESC, _______, _______, _______, _______, _______, _______,          MO(MDIA),   KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,  KC_F12, */
@@ -119,7 +128,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     [KEYB] = LAYOUT_moonlander(
       LED_LEVEL, RGB_M_P, RGB_M_B, RGB_M_R,RGB_M_SW,RGB_M_SN, RGB_M_K,           RGB_M_X, RGB_M_G, RGB_M_T, XXXXXXX, XXXXXXX, XXXXXXX, QK_BOOTLOADER,
-        XXXXXXX, RGB_MOD, RGB_HUI, RGB_SAI, RGB_VAI, RGB_SPI, RGB_TOG,           XXXXXXX, XXXXXXX,DF(BASE),DF(CLMK), XXXXXXX, XXXXXXX, XXXXXXX,
+        XXXXXXX, RGB_MOD, RGB_HUI, RGB_SAI, RGB_VAI, RGB_SPI, RGB_TOG,           XXXXXXX, XXXXXXX,DF(BASE),DF(CLMK), DF(WORK), XXXXXXX, XXXXXXX,
         XXXXXXX,RGB_RMOD, RGB_HUD, RGB_SAD, RGB_VAD, RGB_SPD, XXXXXXX,           KC_PSCR, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
         XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                             XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
         XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,          _______,           XXXXXXX,          XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
@@ -170,11 +179,11 @@ td_state_t cur_dance(tap_dance_state_t *state) {
     else return TD_UNKNOWN;
 }
 
-void cln_lang_finished(tap_dance_state_t *state, void *user_data) {
+void capslang_finished(tap_dance_state_t *state, void *user_data) {
     td_state = cur_dance(state);
     switch(td_state) {
         case TD_SINGLE_TAP:
-            register_code16(KC_SCLN);
+            register_code16(KC_CAPS);
             break;
         case TD_SINGLE_HOLD:
             register_mods(MOD_BIT(KC_LALT));
@@ -186,10 +195,10 @@ void cln_lang_finished(tap_dance_state_t *state, void *user_data) {
     }
 }
 
-void cln_lang_reset(tap_dance_state_t *state, void *user_data) {
+void capslang_reset(tap_dance_state_t *state, void *user_data) {
     switch (td_state) {
         case TD_SINGLE_TAP:
-            unregister_code16(KC_SCLN);
+            unregister_code16(KC_CAPS);
             break;
         case TD_SINGLE_HOLD:
             unregister_mods(MOD_BIT(KC_LALT));
@@ -202,5 +211,5 @@ void cln_lang_reset(tap_dance_state_t *state, void *user_data) {
 }
 
 tap_dance_action_t tap_dance_actions[] = {
-    [CLN_LANG] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, cln_lang_finished, cln_lang_reset)
+    [CAPSLANG] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, capslang_finished, capslang_reset)
 };
